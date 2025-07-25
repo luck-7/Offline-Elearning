@@ -199,11 +199,7 @@ Use the included `test-deployment.html` tool to verify:
 - `ENVIRONMENT_VARIABLES.md` - Configuration reference
 - `Web_APIs_Code_Implementation.html` - Technical documentation
 
-## 🚀 Live Demo
 
-After deployment, your application will be available at:
-- **Frontend**: `https://your-site.netlify.app`
-- **Backend**: `https://your-service.onrender.com`
 
 ## 📝 License
 
