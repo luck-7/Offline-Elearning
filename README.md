@@ -128,10 +128,7 @@ This project includes comprehensive deployment configurations for:
 - Health monitoring
 - Environment variable management
 
-### Quick Deployment
-1. Read `DEPLOYMENT_GUIDE.md` for step-by-step instructions
-2. Use `ENVIRONMENT_VARIABLES.md` for configuration
-3. Run `deploy-setup.bat` for automated setup
+
 
 ## 📊 API Endpoints
 
