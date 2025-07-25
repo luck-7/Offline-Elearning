@@ -197,6 +197,40 @@ Use the included `test-deployment.html` tool to verify:
 - `Web_APIs_Code_Implementation.html` - Technical documentation
 
 
+<img width="1125" height="601" alt="Screenshot 2025-07-25 183213" src="https://github.com/user-attachments/assets/e0e84abd-bc86-40a0-8455-754980d9d68d" />
+
+
+
+
+<img width="1177" height="573" alt="Screenshot 2025-07-25 182308" src="https://github.com/user-attachments/assets/2d2dd6ec-fdc5-478e-af5f-e99ea5d7a356" />
+
+
+
+
+
+
+<img width="1233" height="599" alt="Screenshot 2025-07-25 182826" src="https://github.com/user-attachments/assets/6dbde931-2405-4003-8685-ea7beb8381a9" />
+
+
+
+
+
+
+<img width="1252" height="614" alt="Screenshot 2025-07-25 182905" src="https://github.com/user-attachments/assets/c601db14-3a9d-48c7-b1ef-19cc079d922a" />
+
+
+
+
+
+<img width="10" height="7" alt="Screenshot 2025-07-25 183143" src="https://github.com/user-attachments/assets/52c6aa82-1835-4b97-aaab-e75148538024" />
+
+
+
+
+
+<img width="1019" height="606" alt="Screenshot 2025-07-25 183153" src="https://github.com/user-attachments/assets/ac3eb282-68f8-4e08-8e1e-b091e2a1f9ec" />
+
+
 
 ## 📝 License
 
