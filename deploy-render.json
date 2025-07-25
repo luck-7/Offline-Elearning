@@ -1,0 +1,54 @@
+{
+  "services": [
+    {
+      "type": "web",
+      "name": "elearning-backend",
+      "env": "java",
+      "repo": "https://github.com/luck-7/Offline-Elearning",
+      "branch": "main",
+      "buildCommand": "cd offline && mvn clean package -DskipTests",
+      "startCommand": "cd offline && java -jar target/offline-0.0.1-SNAPSHOT.jar",
+      "plan": "free",
+      "region": "oregon",
+      "envVars": [
+        {
+          "key": "SPRING_PROFILES_ACTIVE",
+          "value": "production"
+        },
+        {
+          "key": "SERVER_PORT",
+          "value": "10000"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "elearning-super-secret-jwt-key-for-production-use-minimum-256-bits-long-random-string"
+        },
+        {
+          "key": "JWT_EXPIRATION",
+          "value": "86400000"
+        },
+        {
+          "key": "CORS_ALLOWED_ORIGINS",
+          "value": "https://localhost:3000,https://your-netlify-site.netlify.app"
+        },
+        {
+          "key": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+          "value": "update"
+        },
+        {
+          "key": "SPRING_JPA_DATABASE_PLATFORM",
+          "value": "org.hibernate.dialect.PostgreSQLDialect"
+        }
+      ]
+    }
+  ],
+  "databases": [
+    {
+      "name": "elearning-database",
+      "databaseName": "elearning",
+      "user": "elearning_user",
+      "plan": "free",
+      "region": "oregon"
+    }
+  ]
+}
