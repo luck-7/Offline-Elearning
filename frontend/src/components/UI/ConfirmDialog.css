@@ -1,0 +1,145 @@
+/* Confirm Dialog Backdrop */
+.confirm-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Confirm Dialog */
+.confirm-dialog {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dialog Header */
+.confirm-dialog-header {
+  padding: 24px 24px 16px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.confirm-dialog-icon {
+  margin-bottom: 12px;
+}
+
+.confirm-dialog-icon i {
+  font-size: 48px;
+}
+
+.confirm-dialog-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+/* Dialog Body */
+.confirm-dialog-body {
+  padding: 16px 24px 24px;
+}
+
+.confirm-dialog-message {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #64748b;
+  text-align: center;
+}
+
+/* Dialog Footer */
+.confirm-dialog-footer {
+  padding: 0 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.confirm-dialog-footer .btn {
+  flex: 1;
+  padding: 12px 24px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.confirm-dialog-footer .btn:hover {
+  transform: translateY(-1px);
+}
+
+.confirm-dialog-footer .btn:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .confirm-dialog {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+  
+  .confirm-dialog-header {
+    padding: 20px 20px 12px;
+  }
+  
+  .confirm-dialog-icon i {
+    font-size: 40px;
+  }
+  
+  .confirm-dialog-title {
+    font-size: 18px;
+  }
+  
+  .confirm-dialog-body {
+    padding: 12px 20px 20px;
+  }
+  
+  .confirm-dialog-message {
+    font-size: 15px;
+  }
+  
+  .confirm-dialog-footer {
+    padding: 0 20px 20px;
+    flex-direction: column;
+  }
+  
+  .confirm-dialog-footer .btn {
+    flex: none;
+  }
+}

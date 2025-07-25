@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline E-Learning Portal - Web APIs Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: -20px -20px 40px -20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .api-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .api-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .api-section h3 {
+            color: #495057;
+            margin: 20px 0 10px 0;
+            font-size: 1.3rem;
+        }
+        
+        .api-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid #28a745;
+        }
+        
+        .api-item h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .description {
+            margin-bottom: 15px;
+            color: #6c757d;
+        }
+        
+        .usage {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .file-location {
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #1976d2;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        
+        .features {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .features li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .api-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Offline E-Learning Portal</h1>
+            <p>Comprehensive Web APIs & Technologies Documentation</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">12+</div>
+                <div class="stat-label">Web APIs Used</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Core Technologies</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Offline Capable</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">PWA</div>
+                <div class="stat-label">Ready</div>
+            </div>
+        </div>
+
+        <!-- Canvas API Section -->
+        <div class="api-section">
+            <h2><span class="icon">🎨</span> Canvas API</h2>
+            <div class="description">
+                The HTML5 Canvas API is extensively used for interactive drawing and visual learning components.
+            </div>
+            
+            <div class="api-item">
+                <h4>Drawing Canvas Component</h4>
+                <div class="description">
+                    Interactive drawing canvas with pen, eraser, and shape tools for visual quizzes and diagrams.
+                </div>
+                <div class="usage">
+// Canvas initialization and drawing
+const canvas = canvasRef.current;
+const ctx = canvas.getContext('2d');
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+// Drawing operations
+ctx.strokeStyle = color;
+ctx.lineWidth = lineWidth;
+ctx.lineTo(pos.x, pos.y);
+ctx.stroke();
+                </div>
+                <div class="file-location">📁 frontend/src/components/Canvas/DrawingCanvas.js</div>
+                <div class="file-location">📁 frontend/src/hooks/useCanvas.js</div>
+                
+                <h3>Features:</h3>
+                <ul class="features">
+                    <li>Pen and eraser tools</li>
+                    <li>Color picker and line width control</li>
+                    <li>Undo/Redo functionality with history</li>
+                    <li>Touch support for mobile devices</li>
+                    <li>Shape drawing (rectangles, circles, lines)</li>
+                    <li>Image export as base64 data URL</li>
+                    <li>Load existing images for editing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Intersection Observer API Section -->
+        <div class="api-section">
+            <h2><span class="icon">👁️</span> Intersection Observer API</h2>
+            <div class="description">
+                Used for scroll-based animations, lazy loading, and performance optimization.
+            </div>
+            
+            <div class="api-item">
+                <h4>Scroll Animation Hook</h4>
+                <div class="description">
+                    Custom React hook for detecting when elements enter the viewport for animations and lazy loading.
+                </div>
+                <div class="usage">
+// Intersection Observer implementation
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    setIsIntersecting(entry.isIntersecting);
+    if (entry.isIntersecting && !hasIntersected) {
+      setHasIntersected(true);
+    }
+  },
+  {
+    threshold: 0.1,
+    rootMargin: '50px',
+    ...options
+  }
+);
+                </div>
+                <div class="file-location">📁 frontend/src/hooks/useIntersectionObserver.js</div>
+                
+                <h3>Use Cases:</h3>
+                <ul class="features">
+                    <li>Fade-in animations on scroll</li>
+                    <li>Lazy loading of course content</li>
+                    <li>Performance optimization</li>
+                    <li>Progress tracking visibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IndexedDB API Section -->
+        <div class="api-section">
+            <h2><span class="icon">💾</span> IndexedDB API</h2>
+            <div class="description">
+                Client-side database for storing large amounts of structured data for offline functionality.
+            </div>
+
+            <div class="api-item">
+                <h4>Offline Data Storage</h4>
+                <div class="description">
+                    Comprehensive offline storage system for courses, lessons, quizzes, and user progress.
+                </div>
+                <div class="usage">
+// IndexedDB initialization
+const request = indexedDB.open('eLearningDB', 1);
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
+
+  // Create object stores
+  if (!db.objectStoreNames.contains('courses')) {
+    db.createObjectStore('courses', { keyPath: 'id' });
+  }
+
+  if (!db.objectStoreNames.contains('lessons')) {
+    db.createObjectStore('lessons', { keyPath: 'id' });
+  }
+};
+
+// Store data
+const transaction = db.transaction(['courses'], 'readwrite');
+const store = transaction.objectStore('courses');
+store.put(courseData);
+                </div>
+                <div class="file-location">📁 frontend/src/App.js</div>
+                <div class="file-location">📁 frontend/src/contexts/OfflineContext.js</div>
+                <div class="file-location">📁 frontend/src/utils/backgroundTasks.js</div>
+
+                <h3>Stored Data Types:</h3>
+                <ul class="features">
+                    <li>Course information and metadata</li>
+                    <li>Lesson content and materials</li>
+                    <li>Quiz questions and answers</li>
+                    <li>User progress and completion status</li>
+                    <li>Pending quiz submissions</li>
+                    <li>Cached API responses</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Service Worker API Section -->
+        <div class="api-section">
+            <h2><span class="icon">⚙️</span> Service Worker API</h2>
+            <div class="description">
+                Background script for caching, offline functionality, and push notifications.
+            </div>
+
+            <div class="api-item">
+                <h4>Offline Caching Strategy</h4>
+                <div class="description">
+                    Implements cache-first strategy for static assets and network-first for API calls.
+                </div>
+                <div class="usage">
+// Service Worker caching
+const CACHE_NAME = 'elearning-portal-v1';
+const API_CACHE_NAME = 'elearning-api-v1';
+
+// Cache static files
+const STATIC_CACHE_URLS = [
+  '/',
+  '/static/js/bundle.js',
+  '/static/css/main.css',
+  '/manifest.json'
+];
+
+// Install event - cache static assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_CACHE_URLS))
+  );
+});
+
+// Fetch event - serve from cache or network
+self.addEventListener('fetch', (event) => {
+  if (event.request.url.includes('/api/')) {
+    // Network first for API calls
+    event.respondWith(networkFirstStrategy(event.request));
+  } else {
+    // Cache first for static assets
+    event.respondWith(cacheFirstStrategy(event.request));
+  }
+});
+                </div>
+                <div class="file-location">📁 frontend/public/sw.js</div>
+
+                <h3>Caching Strategies:</h3>
+                <ul class="features">
+                    <li>Cache-first for static assets</li>
+                    <li>Network-first for API calls</li>
+                    <li>Stale-while-revalidate for images</li>
+                    <li>Background sync for failed requests</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Network Information API Section -->
+        <div class="api-section">
+            <h2><span class="icon">📡</span> Network Information API</h2>
+            <div class="description">
+                Provides information about the user's network connection for adaptive content delivery.
+            </div>
+
+            <div class="api-item">
+                <h4>Adaptive Content Delivery</h4>
+                <div class="description">
+                    Monitors network quality and adapts content delivery accordingly.
+                </div>
+                <div class="usage">
+// Network Information API usage
+const updateNetworkInfo = () => {
+  if ('connection' in navigator) {
+    const connection = navigator.connection ||
+                      navigator.mozConnection ||
+                      navigator.webkitConnection;
+
+    if (connection) {
+      setConnectionType(connection.type || 'unknown');
+      setEffectiveType(connection.effectiveType || '4g');
+      setDownlink(connection.downlink || 10);
+      setRtt(connection.rtt || 100);
+    }
+  }
+};
+
+// Connection quality assessment
+const getConnectionQuality = () => {
+  if (effectiveType === 'slow-2g' || effectiveType === '2g') {
+    return 'poor';
+  } else if (effectiveType === '3g') {
+    return 'good';
+  } else if (effectiveType === '4g') {
+    return 'excellent';
+  }
+  return 'unknown';
+};
+                </div>
+                <div class="file-location">📁 frontend/src/contexts/NetworkContext.js</div>
+
+                <h3>Adaptive Features:</h3>
+                <ul class="features">
+                    <li>Video quality adjustment based on connection</li>
+                    <li>Image compression for slow connections</li>
+                    <li>Content preloading optimization</li>
+                    <li>Data usage estimation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Local Storage API Section -->
+        <div class="api-section">
+            <h2><span class="icon">🗄️</span> Local Storage API</h2>
+            <div class="description">
+                Simple key-value storage for user preferences and authentication tokens.
+            </div>
+
+            <div class="api-item">
+                <h4>Authentication & Preferences</h4>
+                <div class="description">
+                    Stores JWT tokens and user preferences for persistent sessions.
+                </div>
+                <div class="usage">
+// Authentication token storage
+const token = localStorage.getItem('token');
+if (token) {
+  config.headers.Authorization = `Bearer ${token}`;
+}
+
+// Store user preferences
+localStorage.setItem('theme', 'dark');
+localStorage.setItem('language', 'en');
+
+// Clear on logout
+localStorage.removeItem('token');
+localStorage.removeItem('user');
+                </div>
+                <div class="file-location">📁 frontend/src/utils/api.js</div>
+                <div class="file-location">📁 frontend/src/App.js</div>
+
+                <h3>Stored Data:</h3>
+                <ul class="features">
+                    <li>JWT authentication tokens</li>
+                    <li>User preferences and settings</li>
+                    <li>Theme and language preferences</li>
+                    <li>Last visited pages</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Background Tasks API Section -->
+        <div class="api-section">
+            <h2><span class="icon">⏰</span> Background Tasks API (requestIdleCallback)</h2>
+            <div class="description">
+                Schedules non-critical tasks during browser idle time for optimal performance.
+            </div>
+
+            <div class="api-item">
+                <h4>Intelligent Content Preloading</h4>
+                <div class="description">
+                    Preloads course content during idle time without affecting user experience.
+                </div>
+                <div class="usage">
+// Background task scheduling
+if ('requestIdleCallback' in window) {
+  this.scheduleIdleTasks();
+}
+
+scheduleIdleTasks() {
+  this.idleCallback = requestIdleCallback((deadline) => {
+    while (deadline.timeRemaining() > 0 && this.tasks.length > 0) {
+      const task = this.tasks.shift();
+      try {
+        task.execute();
+      } catch (error) {
+        console.error('Background task failed:', error);
+      }
+    }
+
+    if (this.tasks.length > 0) {
+      this.scheduleIdleTasks();
+    }
+  });
+}
+
+// Smart preloading
+export const smartPreload = {
+  preloadNextLesson: (currentLessonId, courseId) => {
+    backgroundTaskManager.addTask(async () => {
+      // Preload next lesson content
+    }, 'normal');
+  }
+};
+                </div>
+                <div class="file-location">📁 frontend/src/utils/backgroundTasks.js</div>
+
+                <h3>Background Tasks:</h3>
+                <ul class="features">
+                    <li>Course content preloading</li>
+                    <li>Next lesson preparation</li>
+                    <li>Popular courses caching</li>
+                    <li>User behavior analysis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Fetch API Section -->
+        <div class="api-section">
+            <h2><span class="icon">🌐</span> Fetch API</h2>
+            <div class="description">
+                Modern HTTP client for API communication with offline fallback capabilities.
+            </div>
+
+            <div class="api-item">
+                <h4>Offline-Aware API Wrapper</h4>
+                <div class="description">
+                    Intelligent API wrapper that handles online/offline scenarios gracefully.
+                </div>
+                <div class="usage">
+// Offline-aware API wrapper
+export const offlineAPI = {
+  async request(apiCall, fallbackData = null, cacheKey = null) {
+    try {
+      // Try online request first
+      const response = await apiCall();
+
+      // Cache successful response
+      if (cacheKey && 'caches' in window) {
+        const cache = await caches.open('api-cache');
+        cache.put(cacheKey, new Response(JSON.stringify(response.data)));
+      }
+
+      return response;
+    } catch (error) {
+      // Fallback to cached data when offline
+      if (cacheKey && 'caches' in window) {
+        const cache = await caches.open('api-cache');
+        const cachedResponse = await cache.match(cacheKey);
+
+        if (cachedResponse) {
+          const data = await cachedResponse.json();
+          return { data, fromCache: true };
+        }
+      }
+
+      // Return fallback data or throw error
+      if (fallbackData) {
+        return { data: fallbackData, fromFallback: true };
+      }
+
+      throw error;
+    }
+  }
+};
+                </div>
+                <div class="file-location">📁 frontend/src/utils/api.js</div>
+
+                <h3>API Features:</h3>
+                <ul class="features">
+                    <li>Automatic retry on failure</li>
+                    <li>Request/response interceptors</li>
+                    <li>JWT token management</li>
+                    <li>Offline fallback strategies</li>
+                    <li>Response caching</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Page Visibility API Section -->
+        <div class="api-section">
+            <h2><span class="icon">👀</span> Page Visibility API</h2>
+            <div class="description">
+                Detects when the page is visible or hidden to optimize resource usage.
+            </div>
+
+            <div class="api-item">
+                <h4>Resource Optimization</h4>
+                <div class="description">
+                    Pauses/resumes background tasks and animations based on page visibility.
+                </div>
+                <div class="usage">
+// Page visibility handling
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    this.pauseTasks();
+    // Pause animations, stop timers
+  } else {
+    this.resumeTasks();
+    // Resume animations, restart timers
+  }
+});
+
+// Pause background tasks when page is hidden
+pauseTasks() {
+  this.isRunning = false;
+  if (this.idleCallback) {
+    cancelIdleCallback(this.idleCallback);
+    this.idleCallback = null;
+  }
+}
+
+// Resume when page becomes visible
+resumeTasks() {
+  if (!this.isRunning && this.tasks.length > 0) {
+    this.isRunning = true;
+    this.scheduleIdleTasks();
+  }
+}
+                </div>
+                <div class="file-location">📁 frontend/src/utils/backgroundTasks.js</div>
+
+                <h3>Optimizations:</h3>
+                <ul class="features">
+                    <li>Pause background tasks when hidden</li>
+                    <li>Stop unnecessary network requests</li>
+                    <li>Reduce CPU usage</li>
+                    <li>Battery life optimization</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Cache API Section -->
+        <div class="api-section">
+            <h2><span class="icon">🗂️</span> Cache API</h2>
+            <div class="description">
+                Programmatic cache management for offline-first web applications.
+            </div>
+
+            <div class="api-item">
+                <h4>Strategic Caching</h4>
+                <div class="description">
+                    Multiple cache strategies for different types of content and API responses.
+                </div>
+                <div class="usage">
+// Cache API usage
+const cache = await caches.open('api-cache');
+
+// Cache API responses
+cache.put(cacheKey, new Response(JSON.stringify(response.data)));
+
+// Retrieve from cache
+const cachedResponse = await cache.match(cacheKey);
+if (cachedResponse) {
+  const data = await cachedResponse.json();
+  return { data, fromCache: true };
+}
+
+// Cache management
+const cacheNames = await caches.keys();
+const oldCaches = cacheNames.filter(name =>
+  name !== CACHE_NAME && name !== API_CACHE_NAME
+);
+
+// Delete old caches
+await Promise.all(
+  oldCaches.map(cacheName => caches.delete(cacheName))
+);
+                </div>
+                <div class="file-location">📁 frontend/public/sw.js</div>
+                <div class="file-location">📁 frontend/src/utils/api.js</div>
+
+                <h3>Cache Types:</h3>
+                <ul class="features">
+                    <li>Static asset cache</li>
+                    <li>API response cache</li>
+                    <li>Image and media cache</li>
+                    <li>Dynamic content cache</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Touch Events API Section -->
+        <div class="api-section">
+            <h2><span class="icon">👆</span> Touch Events API</h2>
+            <div class="description">
+                Handles touch interactions for mobile devices in the drawing canvas.
+            </div>
+
+            <div class="api-item">
+                <h4>Mobile Drawing Support</h4>
+                <div class="description">
+                    Enables drawing functionality on touch devices with pressure sensitivity.
+                </div>
+                <div class="usage">
+// Touch event handling in canvas
+const handleTouchStart = (e) => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const rect = canvasRef.current.getBoundingClientRect();
+
+  const pos = {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
+
+  startDrawing(pos);
+};
+
+const handleTouchMove = (e) => {
+  e.preventDefault();
+  if (!isDrawing) return;
+
+  const touch = e.touches[0];
+  const rect = canvasRef.current.getBoundingClientRect();
+
+  const pos = {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
+
+  draw(pos);
+};
+
+// Prevent scrolling while drawing
+canvas.style.touchAction = 'none';
+                </div>
+                <div class="file-location">📁 frontend/src/components/Canvas/DrawingCanvas.js</div>
+
+                <h3>Touch Features:</h3>
+                <ul class="features">
+                    <li>Multi-touch gesture support</li>
+                    <li>Pressure sensitivity</li>
+                    <li>Prevent scroll while drawing</li>
+                    <li>Touch-optimized UI controls</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Geolocation API Section -->
+        <div class="api-section">
+            <h2><span class="icon">📍</span> Geolocation API</h2>
+            <div class="description">
+                Provides location-based features for content localization and analytics.
+            </div>
+
+            <div class="api-item">
+                <h4>Location-Based Features</h4>
+                <div class="description">
+                    Optional location services for content personalization and offline map features.
+                </div>
+                <div class="usage">
+// Geolocation implementation
+if ('geolocation' in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+
+      // Store location for offline use
+      localStorage.setItem('userLocation', JSON.stringify({
+        lat: latitude,
+        lng: longitude,
+        timestamp: Date.now()
+      }));
+
+      // Customize content based on location
+      customizeContentByLocation(latitude, longitude);
+    },
+    (error) => {
+      console.warn('Geolocation not available:', error.message);
+      // Fallback to IP-based location or default content
+    },
+    {
+      enableHighAccuracy: false,
+      timeout: 10000,
+      maximumAge: 600000 // 10 minutes
+    }
+  );
+}
+                </div>
+                <div class="file-location">📁 frontend/src/utils/locationServices.js</div>
+
+                <h3>Location Features:</h3>
+                <ul class="features">
+                    <li>Content localization</li>
+                    <li>Timezone-aware scheduling</li>
+                    <li>Regional course recommendations</li>
+                    <li>Offline map integration</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- File API Section -->
+        <div class="api-section">
+            <h2><span class="icon">📁</span> File API</h2>
+            <div class="description">
+                Handles file uploads, downloads, and local file processing for course materials.
+            </div>
+
+            <div class="api-item">
+                <h4>File Management</h4>
+                <div class="description">
+                    Comprehensive file handling for course materials, assignments, and user uploads.
+                </div>
+                <div class="usage">
+// File upload handling
+const handleFileUpload = (event) => {
+  const files = Array.from(event.target.files);
+
+  files.forEach(file => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const fileData = {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        content: e.target.result,
+        lastModified: file.lastModified
+      };
+
+      // Store in IndexedDB for offline access
+      storeFileOffline(fileData);
+
+      // Upload to server when online
+      if (navigator.onLine) {
+        uploadToServer(fileData);
+      } else {
+        queueForUpload(fileData);
+      }
+    };
+
+    // Read file based on type
+    if (file.type.startsWith('image/')) {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsArrayBuffer(file);
+    }
+  });
+};
+
+// File download for offline access
+const downloadForOffline = async (fileUrl, fileName) => {
+  try {
+    const response = await fetch(fileUrl);
+    const blob = await response.blob();
+
+    // Store in IndexedDB
+    const fileData = {
+      name: fileName,
+      type: blob.type,
+      size: blob.size,
+      content: await blob.arrayBuffer()
+    };
+
+    await storeFileOffline(fileData);
+  } catch (error) {
+    console.error('Failed to download file:', error);
+  }
+};
+                </div>
+                <div class="file-location">📁 frontend/src/utils/fileManager.js</div>
+
+                <h3>File Operations:</h3>
+                <ul class="features">
+                    <li>Drag and drop file uploads</li>
+                    <li>File type validation</li>
+                    <li>Progress tracking</li>
+                    <li>Offline file storage</li>
+                    <li>Automatic compression</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="api-section">
+            <h2><span class="icon">📊</span> Technology Summary</h2>
+            <div class="description">
+                Complete overview of all Web APIs and technologies used in the Offline E-Learning Portal.
+            </div>
+
+            <div class="api-item">
+                <h4>Core Web APIs</h4>
+                <ul class="features">
+                    <li><strong>Canvas API</strong> - Interactive drawing and visual learning</li>
+                    <li><strong>IndexedDB API</strong> - Offline data storage and synchronization</li>
+                    <li><strong>Service Worker API</strong> - Background processing and caching</li>
+                    <li><strong>Intersection Observer API</strong> - Scroll animations and lazy loading</li>
+                    <li><strong>Network Information API</strong> - Adaptive content delivery</li>
+                    <li><strong>Local Storage API</strong> - User preferences and authentication</li>
+                    <li><strong>Background Tasks API</strong> - Idle-time content preloading</li>
+                    <li><strong>Fetch API</strong> - Modern HTTP client with offline fallback</li>
+                    <li><strong>Page Visibility API</strong> - Resource optimization</li>
+                    <li><strong>Cache API</strong> - Programmatic cache management</li>
+                    <li><strong>Touch Events API</strong> - Mobile device support</li>
+                    <li><strong>Geolocation API</strong> - Location-based features</li>
+                    <li><strong>File API</strong> - File upload and management</li>
+                </ul>
+            </div>
+
+            <div class="api-item">
+                <h4>Frontend Technologies</h4>
+                <ul class="features">
+                    <li><strong>React 18</strong> - Modern UI framework with hooks</li>
+                    <li><strong>React Router</strong> - Client-side routing</li>
+                    <li><strong>Bootstrap 5</strong> - Responsive CSS framework</li>
+                    <li><strong>Axios</strong> - HTTP client library</li>
+                    <li><strong>Bootstrap Icons</strong> - Icon library</li>
+                </ul>
+            </div>
+
+            <div class="api-item">
+                <h4>Backend Technologies</h4>
+                <ul class="features">
+                    <li><strong>Spring Boot 3</strong> - Java web framework</li>
+                    <li><strong>Spring Security</strong> - Authentication and authorization</li>
+                    <li><strong>Spring Data JPA</strong> - Database abstraction</li>
+                    <li><strong>PostgreSQL</strong> - Relational database</li>
+                    <li><strong>JWT</strong> - JSON Web Tokens for authentication</li>
+                    <li><strong>Maven</strong> - Build and dependency management</li>
+                </ul>
+            </div>
+
+            <div class="api-item">
+                <h4>Progressive Web App Features</h4>
+                <ul class="features">
+                    <li><strong>Offline-First Architecture</strong> - Works without internet</li>
+                    <li><strong>Responsive Design</strong> - Mobile and desktop optimized</li>
+                    <li><strong>App-like Experience</strong> - Native app feel</li>
+                    <li><strong>Background Sync</strong> - Data synchronization</li>
+                    <li><strong>Push Notifications</strong> - Real-time updates</li>
+                    <li><strong>Installable</strong> - Add to home screen</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3 style="color: #667eea; margin-bottom: 10px;">🚀 Ready for Production</h3>
+            <p style="color: #6c757d; margin: 0;">
+                This comprehensive implementation showcases modern web development practices with
+                offline-first architecture, progressive enhancement, and optimal user experience.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

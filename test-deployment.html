@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Test - Offline E-Learning Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .test-section h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            margin: 10px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .result {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Deployment Test Tool</h1>
+            <p>Test your deployed Offline E-Learning Portal</p>
+        </div>
+
+        <!-- Backend Test -->
+        <div class="test-section">
+            <h3>🔧 Backend Health Check</h3>
+            <div class="input-group">
+                <label for="backendUrl">Backend URL:</label>
+                <input type="url" id="backendUrl" placeholder="https://your-backend.onrender.com" />
+            </div>
+            <button class="btn" onclick="testBackend()">Test Backend Health</button>
+            <div id="backendResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Frontend Test -->
+        <div class="test-section">
+            <h3>🌐 Frontend Connectivity Test</h3>
+            <div class="input-group">
+                <label for="frontendUrl">Frontend URL:</label>
+                <input type="url" id="frontendUrl" placeholder="https://your-site.netlify.app" />
+            </div>
+            <button class="btn" onclick="testFrontend()">Test Frontend</button>
+            <div id="frontendResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- API Integration Test -->
+        <div class="test-section">
+            <h3>🔗 API Integration Test</h3>
+            <div class="input-group">
+                <label for="apiUrl">API Base URL:</label>
+                <input type="url" id="apiUrl" placeholder="https://your-backend.onrender.com/api" />
+            </div>
+            <button class="btn" onclick="testAPI()">Test API Endpoints</button>
+            <div id="apiResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- CORS Test -->
+        <div class="test-section">
+            <h3>🛡️ CORS Configuration Test</h3>
+            <button class="btn" onclick="testCORS()">Test CORS</button>
+            <div id="corsResult" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Quick Setup -->
+        <div class="test-section">
+            <h3>⚡ Quick Setup</h3>
+            <p>Fill in your deployment URLs:</p>
+            <button class="btn" onclick="quickSetup()">Auto-Fill Test URLs</button>
+            <div id="setupResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const url = document.getElementById('backendUrl').value;
+            const resultDiv = document.getElementById('backendResult');
+            
+            if (!url) {
+                showResult(resultDiv, 'Please enter a backend URL', 'error');
+                return;
+            }
+
+            showResult(resultDiv, 'Testing backend health...', 'info');
+
+            try {
+                const healthUrl = url.endsWith('/') ? url + 'api/actuator/health' : url + '/api/actuator/health';
+                const response = await fetch(healthUrl);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(resultDiv, `✅ Backend is healthy!\nStatus: ${data.status}\nURL: ${healthUrl}`, 'success');
+                } else {
+                    showResult(resultDiv, `❌ Backend health check failed\nStatus: ${response.status}\nURL: ${healthUrl}`, 'error');
+                }
+            } catch (error) {
+                showResult(resultDiv, `❌ Backend connection failed\nError: ${error.message}\nCheck if the URL is correct and the service is running.`, 'error');
+            }
+        }
+
+        async function testFrontend() {
+            const url = document.getElementById('frontendUrl').value;
+            const resultDiv = document.getElementById('frontendResult');
+            
+            if (!url) {
+                showResult(resultDiv, 'Please enter a frontend URL', 'error');
+                return;
+            }
+
+            showResult(resultDiv, 'Testing frontend accessibility...', 'info');
+
+            try {
+                const response = await fetch(url, { mode: 'no-cors' });
+                showResult(resultDiv, `✅ Frontend is accessible!\nURL: ${url}\nNote: This is a basic connectivity test.`, 'success');
+            } catch (error) {
+                showResult(resultDiv, `❌ Frontend connection failed\nError: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAPI() {
+            const url = document.getElementById('apiUrl').value;
+            const resultDiv = document.getElementById('apiResult');
+            
+            if (!url) {
+                showResult(resultDiv, 'Please enter an API URL', 'error');
+                return;
+            }
+
+            showResult(resultDiv, 'Testing API endpoints...', 'info');
+
+            const endpoints = [
+                '/actuator/health',
+                '/courses/public/all',
+                '/auth/test'
+            ];
+
+            let results = 'API Endpoint Tests:\n\n';
+
+            for (const endpoint of endpoints) {
+                try {
+                    const fullUrl = url.endsWith('/') ? url + endpoint.substring(1) : url + endpoint;
+                    const response = await fetch(fullUrl);
+                    
+                    if (response.ok) {
+                        results += `✅ ${endpoint} - OK (${response.status})\n`;
+                    } else {
+                        results += `⚠️ ${endpoint} - ${response.status} ${response.statusText}\n`;
+                    }
+                } catch (error) {
+                    results += `❌ ${endpoint} - Connection failed\n`;
+                }
+            }
+
+            showResult(resultDiv, results, 'info');
+        }
+
+        async function testCORS() {
+            const backendUrl = document.getElementById('backendUrl').value || document.getElementById('apiUrl').value;
+            const resultDiv = document.getElementById('corsResult');
+            
+            if (!backendUrl) {
+                showResult(resultDiv, 'Please enter a backend URL first', 'error');
+                return;
+            }
+
+            showResult(resultDiv, 'Testing CORS configuration...', 'info');
+
+            try {
+                const healthUrl = backendUrl.includes('/api') ? 
+                    backendUrl + '/actuator/health' : 
+                    backendUrl + '/api/actuator/health';
+                
+                const response = await fetch(healthUrl);
+                
+                if (response.ok) {
+                    showResult(resultDiv, `✅ CORS is properly configured!\nCross-origin requests are working.`, 'success');
+                } else {
+                    showResult(resultDiv, `⚠️ CORS might have issues\nStatus: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                if (error.message.includes('CORS')) {
+                    showResult(resultDiv, `❌ CORS Error Detected!\nError: ${error.message}\n\nSolution:\n1. Check CORS_ALLOWED_ORIGINS in backend\n2. Ensure it includes your frontend domain\n3. Redeploy backend after changes`, 'error');
+                } else {
+                    showResult(resultDiv, `❌ Connection failed: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        function quickSetup() {
+            const resultDiv = document.getElementById('setupResult');
+            
+            const backendUrl = prompt('Enter your Render backend URL (e.g., https://your-service.onrender.com):');
+            const frontendUrl = prompt('Enter your Netlify frontend URL (e.g., https://your-site.netlify.app):');
+            
+            if (backendUrl) {
+                document.getElementById('backendUrl').value = backendUrl;
+                document.getElementById('apiUrl').value = backendUrl + '/api';
+            }
+            
+            if (frontendUrl) {
+                document.getElementById('frontendUrl').value = frontendUrl;
+            }
+            
+            if (backendUrl || frontendUrl) {
+                showResult(resultDiv, `✅ URLs configured!\nBackend: ${backendUrl || 'Not set'}\nFrontend: ${frontendUrl || 'Not set'}\n\nNow you can run the individual tests above.`, 'success');
+            } else {
+                showResult(resultDiv, 'Setup cancelled', 'info');
+            }
+        }
+
+        function showResult(element, message, type) {
+            element.textContent = message;
+            element.className = `result ${type}`;
+            element.style.display = 'block';
+        }
+
+        // Auto-fill common URLs on page load
+        window.onload = function() {
+            // You can pre-fill these with your actual URLs after deployment
+            // document.getElementById('backendUrl').value = 'https://your-backend.onrender.com';
+            // document.getElementById('frontendUrl').value = 'https://your-site.netlify.app';
+            // document.getElementById('apiUrl').value = 'https://your-backend.onrender.com/api';
+        };
+    </script>
+</body>
+</html>

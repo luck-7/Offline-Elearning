@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web APIs - Actual Code Implementation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: -20px -20px 40px -20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .api-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .api-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #333;
+        }
+        
+        .code-block .comment {
+            color: #6a9955;
+        }
+        
+        .code-block .keyword {
+            color: #569cd6;
+        }
+        
+        .code-block .string {
+            color: #ce9178;
+        }
+        
+        .code-block .function {
+            color: #dcdcaa;
+        }
+        
+        .code-block .variable {
+            color: #9cdcfe;
+        }
+        
+        .file-path {
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #1976d2;
+            margin: 10px 0;
+            display: inline-block;
+            font-family: monospace;
+        }
+        
+        .features-list {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .features-list h4 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        
+        .features-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .features-list li {
+            padding: 3px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .toc h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .code-block {
+                font-size: 12px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Web APIs - Actual Code Implementation</h1>
+            <p>Real code snippets from the Offline E-Learning Portal project</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ul>
+                <li><a href="#canvas-api">🎨 Canvas API</a></li>
+                <li><a href="#indexeddb-api">💾 IndexedDB API</a></li>
+                <li><a href="#service-worker-api">⚙️ Service Worker API</a></li>
+                <li><a href="#intersection-observer-api">👁️ Intersection Observer API</a></li>
+                <li><a href="#network-information-api">📡 Network Information API</a></li>
+                <li><a href="#local-storage-api">🗄️ Local Storage API</a></li>
+                <li><a href="#background-tasks-api">⏰ Background Tasks API</a></li>
+                <li><a href="#fetch-api">🌐 Fetch API</a></li>
+                <li><a href="#touch-events-api">👆 Touch Events API</a></li>
+                <li><a href="#cache-api">🗂️ Cache API</a></li>
+            </ul>
+        </div>
+
+        <!-- Canvas API Implementation -->
+        <div class="api-section" id="canvas-api">
+            <h2><span class="icon">🎨</span> Canvas API Implementation</h2>
+            
+            <div class="file-path">📁 frontend/src/hooks/useCanvas.js</div>
+            
+            <div class="code-block">
+<span class="comment">// Canvas initialization and context setup</span>
+<span class="keyword">useEffect</span>(() => {
+  <span class="keyword">const</span> <span class="variable">canvas</span> = canvasRef.current;
+  <span class="keyword">if</span> (!canvas) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> <span class="variable">ctx</span> = canvas.<span class="function">getContext</span>(<span class="string">'2d'</span>);
+  ctx.lineCap = <span class="string">'round'</span>;
+  ctx.lineJoin = <span class="string">'round'</span>;
+  
+  <span class="comment">// Set canvas size</span>
+  canvas.width = width;
+  canvas.height = height;
+  
+  <span class="comment">// Clear canvas with white background</span>
+  ctx.fillStyle = <span class="string">'#ffffff'</span>;
+  ctx.<span class="function">fillRect</span>(0, 0, width, height);
+  
+  <span class="comment">// Save initial state for undo/redo</span>
+  <span class="function">saveState</span>();
+}, [width, height]);
+
+<span class="comment">// Drawing function with touch and mouse support</span>
+<span class="keyword">const</span> <span class="function">draw</span> = <span class="function">useCallback</span>((e) => {
+  e.<span class="function">preventDefault</span>();
+  <span class="keyword">if</span> (!isDrawing) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> <span class="variable">canvas</span> = canvasRef.current;
+  <span class="keyword">if</span> (!canvas) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> <span class="variable">ctx</span> = canvas.<span class="function">getContext</span>(<span class="string">'2d'</span>);
+  <span class="keyword">const</span> <span class="variable">pos</span> = <span class="function">getPosition</span>(e);
+
+  <span class="comment">// Handle eraser vs pen tool</span>
+  ctx.globalCompositeOperation = tool === <span class="string">'eraser'</span> ? 
+    <span class="string">'destination-out'</span> : <span class="string">'source-over'</span>;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = tool === <span class="string">'eraser'</span> ? lineWidth * 3 : lineWidth;
+  
+  ctx.<span class="function">lineTo</span>(pos.x, pos.y);
+  ctx.<span class="function">stroke</span>();
+}, [isDrawing, tool, color, lineWidth, getPosition]);
+
+<span class="comment">// Shape drawing functionality</span>
+<span class="keyword">const</span> <span class="function">drawShape</span> = <span class="function">useCallback</span>((shape, startX, startY, endX, endY) => {
+  <span class="keyword">const</span> <span class="variable">canvas</span> = canvasRef.current;
+  <span class="keyword">if</span> (!canvas) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> <span class="variable">ctx</span> = canvas.<span class="function">getContext</span>(<span class="string">'2d'</span>);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.<span class="function">beginPath</span>();
+
+  <span class="keyword">switch</span> (shape) {
+    <span class="keyword">case</span> <span class="string">'rectangle'</span>:
+      ctx.<span class="function">rect</span>(startX, startY, endX - startX, endY - startY);
+      <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'circle'</span>:
+      <span class="keyword">const</span> <span class="variable">radius</span> = Math.<span class="function">sqrt</span>(
+        Math.<span class="function">pow</span>(endX - startX, 2) + Math.<span class="function">pow</span>(endY - startY, 2)
+      );
+      ctx.<span class="function">arc</span>(startX, startY, radius, 0, 2 * Math.PI);
+      <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'line'</span>:
+      ctx.<span class="function">moveTo</span>(startX, startY);
+      ctx.<span class="function">lineTo</span>(endX, endY);
+      <span class="keyword">break</span>;
+  }
+
+  ctx.<span class="function">stroke</span>();
+  <span class="function">saveState</span>();
+}, [color, lineWidth, saveState]);
+            </div>
+
+            <div class="features-list">
+                <h4>Canvas API Features Implemented:</h4>
+                <ul>
+                    <li>2D rendering context with drawing tools</li>
+                    <li>Pen and eraser functionality</li>
+                    <li>Shape drawing (rectangles, circles, lines)</li>
+                    <li>Undo/Redo with canvas state management</li>
+                    <li>Touch events for mobile drawing</li>
+                    <li>Image export as base64 data URL</li>
+                    <li>Dynamic canvas sizing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- IndexedDB API Implementation -->
+        <div class="api-section" id="indexeddb-api">
+            <h2><span class="icon">💾</span> IndexedDB API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/contexts/OfflineContext.js</div>
+
+            <div class="code-block">
+<span class="comment">// IndexedDB database initialization</span>
+<span class="keyword">const</span> <span class="function">openIndexedDB</span> = () => {
+  <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">Promise</span>((resolve, reject) => {
+    <span class="keyword">const</span> <span class="variable">request</span> = indexedDB.<span class="function">open</span>(<span class="string">'eLearningDB'</span>, 1);
+
+    request.onerror = () => <span class="function">reject</span>(request.error);
+    request.onsuccess = () => <span class="function">resolve</span>(request.result);
+
+    <span class="comment">// Database schema setup</span>
+    request.onupgradeneeded = (event) => {
+      <span class="keyword">const</span> <span class="variable">database</span> = event.target.result;
+
+      <span class="comment">// Create object stores for different data types</span>
+      <span class="keyword">const</span> <span class="variable">stores</span> = [
+        <span class="string">'courses'</span>, <span class="string">'lessons'</span>, <span class="string">'quizzes'</span>, <span class="string">'userProgress'</span>,
+        <span class="string">'pendingQuizSubmissions'</span>, <span class="string">'pendingProgressUpdates'</span>, <span class="string">'pendingActions'</span>
+      ];
+
+      stores.<span class="function">forEach</span>(storeName => {
+        <span class="keyword">if</span> (!database.objectStoreNames.<span class="function">contains</span>(storeName)) {
+          database.<span class="function">createObjectStore</span>(storeName, { keyPath: <span class="string">'id'</span> });
+        }
+      });
+    };
+  });
+};
+
+<span class="comment">// Store data in IndexedDB</span>
+<span class="keyword">const</span> <span class="function">storeInIndexedDB</span> = <span class="keyword">async</span> (storeName, data) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">request</span> = indexedDB.<span class="function">open</span>(<span class="string">'eLearningDB'</span>, 1);
+
+    request.onsuccess = (event) => {
+      <span class="keyword">const</span> <span class="variable">db</span> = event.target.result;
+      <span class="keyword">const</span> <span class="variable">transaction</span> = db.<span class="function">transaction</span>([storeName], <span class="string">'readwrite'</span>);
+      <span class="keyword">const</span> <span class="variable">store</span> = transaction.<span class="function">objectStore</span>(storeName);
+
+      <span class="comment">// Handle both single items and arrays</span>
+      <span class="keyword">if</span> (<span class="function">Array.isArray</span>(data)) {
+        data.<span class="function">forEach</span>(item => store.<span class="function">put</span>(item));
+      } <span class="keyword">else</span> {
+        store.<span class="function">put</span>(data);
+      }
+    };
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Failed to store data in IndexedDB:'</span>, error);
+  }
+};
+
+<span class="comment">// Retrieve data from IndexedDB</span>
+<span class="keyword">const</span> <span class="function">getFromIndexedDB</span> = <span class="keyword">async</span> (storeName, key = <span class="keyword">null</span>) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">db</span> = <span class="keyword">await</span> <span class="function">openIndexedDB</span>();
+    <span class="keyword">const</span> <span class="variable">transaction</span> = db.<span class="function">transaction</span>([storeName], <span class="string">'readonly'</span>);
+    <span class="keyword">const</span> <span class="variable">store</span> = transaction.<span class="function">objectStore</span>(storeName);
+
+    <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">Promise</span>((resolve, reject) => {
+      <span class="keyword">const</span> <span class="variable">request</span> = key ? store.<span class="function">get</span>(key) : store.<span class="function">getAll</span>();
+
+      request.onsuccess = () => <span class="function">resolve</span>(request.result);
+      request.onerror = () => <span class="function">reject</span>(request.error);
+    });
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Failed to retrieve data from IndexedDB:'</span>, error);
+    <span class="keyword">return</span> <span class="keyword">null</span>;
+  }
+};
+            </div>
+
+            <div class="features-list">
+                <h4>IndexedDB Features Implemented:</h4>
+                <ul>
+                    <li>Database schema with multiple object stores</li>
+                    <li>Course and lesson content storage</li>
+                    <li>User progress tracking offline</li>
+                    <li>Pending quiz submissions queue</li>
+                    <li>Background sync data management</li>
+                    <li>Automatic database upgrades</li>
+                    <li>Error handling and fallbacks</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Service Worker API Implementation -->
+        <div class="api-section" id="service-worker-api">
+            <h2><span class="icon">⚙️</span> Service Worker API Implementation</h2>
+
+            <div class="file-path">📁 frontend/public/sw.js</div>
+
+            <div class="code-block">
+<span class="comment">// Service Worker cache configuration</span>
+<span class="keyword">const</span> <span class="variable">CACHE_NAME</span> = <span class="string">'elearning-portal-v1'</span>;
+<span class="keyword">const</span> <span class="variable">API_CACHE_NAME</span> = <span class="string">'elearning-api-v1'</span>;
+
+<span class="comment">// Static files to cache for offline use</span>
+<span class="keyword">const</span> <span class="variable">STATIC_CACHE_URLS</span> = [
+  <span class="string">'/'</span>,
+  <span class="string">'/static/js/bundle.js'</span>,
+  <span class="string">'/static/css/main.css'</span>,
+  <span class="string">'/manifest.json'</span>,
+  <span class="string">'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'</span>,
+  <span class="string">'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css'</span>
+];
+
+<span class="comment">// Service Worker installation</span>
+self.<span class="function">addEventListener</span>(<span class="string">'install'</span>, (event) => {
+  console.<span class="function">log</span>(<span class="string">'Service Worker: Installing...'</span>);
+
+  event.<span class="function">waitUntil</span>(
+    <span class="function">Promise.all</span>([
+      <span class="comment">// Cache static files</span>
+      caches.<span class="function">open</span>(CACHE_NAME).<span class="function">then</span>((cache) => {
+        console.<span class="function">log</span>(<span class="string">'Service Worker: Caching static files'</span>);
+        <span class="keyword">return</span> cache.<span class="function">addAll</span>(
+          STATIC_CACHE_URLS.<span class="function">map</span>(url =>
+            <span class="keyword">new</span> <span class="function">Request</span>(url, { credentials: <span class="string">'same-origin'</span> })
+          )
+        );
+      }),
+      <span class="comment">// Cache API responses</span>
+      caches.<span class="function">open</span>(API_CACHE_NAME).<span class="function">then</span>((cache) => {
+        console.<span class="function">log</span>(<span class="string">'Service Worker: Caching API responses'</span>);
+        <span class="keyword">return</span> <span class="function">Promise.all</span>(
+          API_CACHE_URLS.<span class="function">map</span>(url =>
+            <span class="function">fetch</span>(url)
+              .<span class="function">then</span>(response => response.ok ?
+                cache.<span class="function">put</span>(url, response.<span class="function">clone</span>()) : <span class="keyword">null</span>)
+              .<span class="function">catch</span>(() => console.<span class="function">log</span>(`Failed to cache: ${url}`))
+          )
+        );
+      })
+    ])
+  );
+
+  self.<span class="function">skipWaiting</span>();
+});
+
+<span class="comment">// Fetch event handling with caching strategies</span>
+self.<span class="function">addEventListener</span>(<span class="string">'fetch'</span>, (event) => {
+  <span class="keyword">const</span> { request } = event;
+  <span class="keyword">const</span> <span class="variable">url</span> = <span class="keyword">new</span> <span class="function">URL</span>(request.url);
+
+  <span class="comment">// Handle API requests with network-first strategy</span>
+  <span class="keyword">if</span> (url.pathname.<span class="function">startsWith</span>(<span class="string">'/api/'</span>)) {
+    event.<span class="function">respondWith</span>(<span class="function">handleApiRequest</span>(request));
+  }
+  <span class="comment">// Handle static files with cache-first strategy</span>
+  <span class="keyword">else</span> {
+    event.<span class="function">respondWith</span>(<span class="function">handleStaticRequest</span>(request));
+  }
+});
+
+<span class="comment">// Cache-first strategy for static files</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="function">handleStaticRequest</span>(request) {
+  <span class="keyword">try</span> {
+    <span class="comment">// Try cache first</span>
+    <span class="keyword">const</span> <span class="variable">cachedResponse</span> = <span class="keyword">await</span> caches.<span class="function">match</span>(request);
+    <span class="keyword">if</span> (cachedResponse) {
+      <span class="keyword">return</span> cachedResponse;
+    }
+
+    <span class="comment">// Fall back to network</span>
+    <span class="keyword">const</span> <span class="variable">networkResponse</span> = <span class="keyword">await</span> <span class="function">fetch</span>(request);
+
+    <span class="keyword">if</span> (networkResponse.ok) {
+      <span class="comment">// Cache the response</span>
+      <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(CACHE_NAME);
+      cache.<span class="function">put</span>(request, networkResponse.<span class="function">clone</span>());
+    }
+
+    <span class="keyword">return</span> networkResponse;
+  } <span class="keyword">catch</span> (error) {
+    <span class="comment">// Return offline page for navigation requests</span>
+    <span class="keyword">if</span> (request.mode === <span class="string">'navigate'</span>) {
+      <span class="keyword">return</span> caches.<span class="function">match</span>(<span class="string">'/'</span>);
+    }
+    <span class="keyword">throw</span> error;
+  }
+}
+            </div>
+
+            <div class="features-list">
+                <h4>Service Worker Features Implemented:</h4>
+                <ul>
+                    <li>Cache-first strategy for static assets</li>
+                    <li>Network-first strategy for API calls</li>
+                    <li>Automatic cache management and updates</li>
+                    <li>Background sync for failed requests</li>
+                    <li>Offline fallback pages</li>
+                    <li>CDN resource caching</li>
+                    <li>Progressive enhancement</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Intersection Observer API Implementation -->
+        <div class="api-section" id="intersection-observer-api">
+            <h2><span class="icon">👁️</span> Intersection Observer API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/hooks/useIntersectionObserver.js</div>
+
+            <div class="code-block">
+<span class="comment">// Intersection Observer hook for scroll animations</span>
+<span class="keyword">export</span> <span class="keyword">const</span> <span class="function">useIntersectionObserver</span> = (options = {}) => {
+  <span class="keyword">const</span> [isIntersecting, setIsIntersecting] = <span class="function">useState</span>(<span class="keyword">false</span>);
+  <span class="keyword">const</span> [hasIntersected, setHasIntersected] = <span class="function">useState</span>(<span class="keyword">false</span>);
+  <span class="keyword">const</span> <span class="variable">targetRef</span> = <span class="function">useRef</span>(<span class="keyword">null</span>);
+
+  <span class="function">useEffect</span>(() => {
+    <span class="keyword">const</span> <span class="variable">target</span> = targetRef.current;
+    <span class="keyword">if</span> (!target) <span class="keyword">return</span>;
+
+    <span class="comment">// Create Intersection Observer instance</span>
+    <span class="keyword">const</span> <span class="variable">observer</span> = <span class="keyword">new</span> <span class="function">IntersectionObserver</span>(
+      ([entry]) => {
+        <span class="function">setIsIntersecting</span>(entry.isIntersecting);
+        <span class="keyword">if</span> (entry.isIntersecting && !hasIntersected) {
+          <span class="function">setHasIntersected</span>(<span class="keyword">true</span>);
+        }
+      },
+      {
+        threshold: 0.1,           <span class="comment">// Trigger when 10% visible</span>
+        rootMargin: <span class="string">'50px'</span>,      <span class="comment">// 50px margin around root</span>
+        ...options
+      }
+    );
+
+    observer.<span class="function">observe</span>(target);
+
+    <span class="keyword">return</span> () => {
+      observer.<span class="function">unobserve</span>(target);
+    };
+  }, [hasIntersected, options]);
+
+  <span class="keyword">return</span> { targetRef, isIntersecting, hasIntersected };
+};
+
+<span class="comment">// Lazy image loading with Intersection Observer</span>
+<span class="keyword">export</span> <span class="keyword">const</span> <span class="function">useLazyImage</span> = (src, placeholder = <span class="keyword">null</span>) => {
+  <span class="keyword">const</span> [imageSrc, setImageSrc] = <span class="function">useState</span>(placeholder);
+  <span class="keyword">const</span> [isLoaded, setIsLoaded] = <span class="function">useState</span>(<span class="keyword">false</span>);
+  <span class="keyword">const</span> { targetRef, hasIntersected } = <span class="function">useIntersectionObserver</span>();
+
+  <span class="function">useEffect</span>(() => {
+    <span class="keyword">if</span> (hasIntersected && src) {
+      <span class="keyword">const</span> <span class="variable">img</span> = <span class="keyword">new</span> <span class="function">Image</span>();
+      img.onload = () => {
+        <span class="function">setImageSrc</span>(src);
+        <span class="function">setIsLoaded</span>(<span class="keyword">true</span>);
+      };
+      img.src = src;
+    }
+  }, [hasIntersected, src]);
+
+  <span class="keyword">return</span> { targetRef, imageSrc, isLoaded };
+};
+
+<span class="comment">// Scroll-triggered animations</span>
+<span class="keyword">export</span> <span class="keyword">const</span> <span class="function">useScrollAnimation</span> = (animationClass = <span class="string">'animate-on-scroll'</span>) => {
+  <span class="keyword">const</span> { targetRef, hasIntersected } = <span class="function">useIntersectionObserver</span>();
+
+  <span class="function">useEffect</span>(() => {
+    <span class="keyword">const</span> <span class="variable">target</span> = targetRef.current;
+    <span class="keyword">if</span> (!target) <span class="keyword">return</span>;
+
+    <span class="keyword">if</span> (hasIntersected) {
+      target.classList.<span class="function">add</span>(<span class="string">'animated'</span>);
+    }
+  }, [hasIntersected]);
+
+  <span class="keyword">return</span> { targetRef, hasAnimated: hasIntersected };
+};
+            </div>
+
+            <div class="features-list">
+                <h4>Intersection Observer Features Implemented:</h4>
+                <ul>
+                    <li>Scroll-based animations and effects</li>
+                    <li>Lazy loading of images and content</li>
+                    <li>Performance optimization for large lists</li>
+                    <li>Viewport visibility detection</li>
+                    <li>Custom threshold and margin settings</li>
+                    <li>One-time and continuous observation modes</li>
+                    <li>Memory-efficient cleanup</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Network Information API Implementation -->
+        <div class="api-section" id="network-information-api">
+            <h2><span class="icon">📡</span> Network Information API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/contexts/NetworkContext.js</div>
+
+            <div class="code-block">
+<span class="comment">// Network Information API for adaptive content delivery</span>
+<span class="keyword">const</span> <span class="function">updateNetworkInfo</span> = () => {
+  <span class="keyword">if</span> (<span class="string">'connection'</span> <span class="keyword">in</span> navigator) {
+    <span class="keyword">const</span> <span class="variable">connection</span> = navigator.connection ||
+                      navigator.mozConnection ||
+                      navigator.webkitConnection;
+
+    <span class="keyword">if</span> (connection) {
+      <span class="function">setConnectionType</span>(connection.type || <span class="string">'unknown'</span>);
+      <span class="function">setEffectiveType</span>(connection.effectiveType || <span class="string">'4g'</span>);
+      <span class="function">setDownlink</span>(connection.downlink || 10);
+      <span class="function">setRtt</span>(connection.rtt || 100);
+      <span class="function">setSaveData</span>(connection.saveData || <span class="keyword">false</span>);
+    }
+  }
+};
+
+<span class="comment">// Connection quality assessment</span>
+<span class="keyword">const</span> <span class="function">getConnectionQuality</span> = () => {
+  <span class="keyword">if</span> (effectiveType === <span class="string">'slow-2g'</span> || effectiveType === <span class="string">'2g'</span>) {
+    <span class="keyword">return</span> <span class="string">'poor'</span>;
+  } <span class="keyword">else</span> <span class="keyword">if</span> (effectiveType === <span class="string">'3g'</span>) {
+    <span class="keyword">return</span> <span class="string">'good'</span>;
+  } <span class="keyword">else</span> <span class="keyword">if</span> (effectiveType === <span class="string">'4g'</span>) {
+    <span class="keyword">return</span> <span class="string">'excellent'</span>;
+  }
+  <span class="keyword">return</span> <span class="string">'unknown'</span>;
+};
+
+<span class="comment">// Adaptive content loading based on connection</span>
+<span class="keyword">const</span> <span class="function">getOptimalVideoQuality</span> = () => {
+  <span class="keyword">const</span> <span class="variable">quality</span> = <span class="function">getConnectionQuality</span>();
+
+  <span class="keyword">switch</span> (quality) {
+    <span class="keyword">case</span> <span class="string">'poor'</span>:
+      <span class="keyword">return</span> <span class="string">'240p'</span>;
+    <span class="keyword">case</span> <span class="string">'good'</span>:
+      <span class="keyword">return</span> <span class="string">'480p'</span>;
+    <span class="keyword">case</span> <span class="string">'excellent'</span>:
+      <span class="keyword">return</span> <span class="string">'720p'</span>;
+    <span class="keyword">default</span>:
+      <span class="keyword">return</span> <span class="string">'480p'</span>;
+  }
+};
+
+<span class="comment">// Data usage estimation</span>
+<span class="keyword">const</span> <span class="function">estimateDataUsage</span> = (contentSize, duration) => {
+  <span class="keyword">const</span> <span class="variable">quality</span> = <span class="function">getConnectionQuality</span>();
+  <span class="keyword">const</span> <span class="variable">compressionRatio</span> = {
+    poor: 0.3,      <span class="comment">// High compression for slow connections</span>
+    good: 0.6,      <span class="comment">// Medium compression</span>
+    excellent: 1.0  <span class="comment">// No compression</span>
+  };
+
+  <span class="keyword">return</span> contentSize * (compressionRatio[quality] || 0.6);
+};
+
+<span class="comment">// Listen for connection changes</span>
+<span class="function">useEffect</span>(() => {
+  <span class="function">updateNetworkInfo</span>();
+
+  <span class="keyword">const</span> <span class="function">handleConnectionChange</span> = () => {
+    <span class="function">updateNetworkInfo</span>();
+  };
+
+  <span class="keyword">if</span> (<span class="string">'connection'</span> <span class="keyword">in</span> navigator) {
+    navigator.connection.<span class="function">addEventListener</span>(<span class="string">'change'</span>, handleConnectionChange);
+
+    <span class="keyword">return</span> () => {
+      navigator.connection.<span class="function">removeEventListener</span>(<span class="string">'change'</span>, handleConnectionChange);
+    };
+  }
+}, []);
+            </div>
+
+            <div class="features-list">
+                <h4>Network Information Features Implemented:</h4>
+                <ul>
+                    <li>Connection type and speed detection</li>
+                    <li>Adaptive video quality selection</li>
+                    <li>Data usage estimation and optimization</li>
+                    <li>Save-data mode support</li>
+                    <li>Real-time connection monitoring</li>
+                    <li>Content compression based on speed</li>
+                    <li>Bandwidth-aware preloading</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Local Storage API Implementation -->
+        <div class="api-section" id="local-storage-api">
+            <h2><span class="icon">🗄️</span> Local Storage API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/utils/api.js</div>
+
+            <div class="code-block">
+<span class="comment">// JWT Token management with Local Storage</span>
+<span class="keyword">const</span> <span class="function">getAuthToken</span> = () => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">token</span> = localStorage.<span class="function">getItem</span>(<span class="string">'token'</span>);
+    <span class="keyword">if</span> (token) {
+      <span class="comment">// Verify token expiration</span>
+      <span class="keyword">const</span> <span class="variable">payload</span> = JSON.<span class="function">parse</span>(<span class="function">atob</span>(token.<span class="function">split</span>(<span class="string">'.'</span>)[1]));
+      <span class="keyword">const</span> <span class="variable">currentTime</span> = Date.<span class="function">now</span>() / 1000;
+
+      <span class="keyword">if</span> (payload.exp > currentTime) {
+        <span class="keyword">return</span> token;
+      } <span class="keyword">else</span> {
+        <span class="comment">// Token expired, remove it</span>
+        localStorage.<span class="function">removeItem</span>(<span class="string">'token'</span>);
+        localStorage.<span class="function">removeItem</span>(<span class="string">'user'</span>);
+      }
+    }
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Error reading token:'</span>, error);
+  }
+  <span class="keyword">return</span> <span class="keyword">null</span>;
+};
+
+<span class="comment">// Store authentication data</span>
+<span class="keyword">const</span> <span class="function">setAuthData</span> = (token, user) => {
+  <span class="keyword">try</span> {
+    localStorage.<span class="function">setItem</span>(<span class="string">'token'</span>, token);
+    localStorage.<span class="function">setItem</span>(<span class="string">'user'</span>, JSON.<span class="function">stringify</span>(user));
+    localStorage.<span class="function">setItem</span>(<span class="string">'lastLogin'</span>, <span class="keyword">new</span> <span class="function">Date</span>().<span class="function">toISOString</span>());
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Error storing auth data:'</span>, error);
+  }
+};
+
+<span class="comment">// Clear authentication data on logout</span>
+<span class="keyword">const</span> <span class="function">clearAuthData</span> = () => {
+  <span class="keyword">try</span> {
+    localStorage.<span class="function">removeItem</span>(<span class="string">'token'</span>);
+    localStorage.<span class="function">removeItem</span>(<span class="string">'user'</span>);
+    localStorage.<span class="function">removeItem</span>(<span class="string">'lastLogin'</span>);
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Error clearing auth data:'</span>, error);
+  }
+};
+
+<span class="comment">// User preferences management</span>
+<span class="keyword">const</span> <span class="function">saveUserPreferences</span> = (preferences) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">existing</span> = JSON.<span class="function">parse</span>(
+      localStorage.<span class="function">getItem</span>(<span class="string">'userPreferences'</span>) || <span class="string">'{}'</span>
+    );
+    <span class="keyword">const</span> <span class="variable">updated</span> = { ...existing, ...preferences };
+    localStorage.<span class="function">setItem</span>(<span class="string">'userPreferences'</span>, JSON.<span class="function">stringify</span>(updated));
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Error saving preferences:'</span>, error);
+  }
+};
+
+<span class="comment">// Get user preferences</span>
+<span class="keyword">const</span> <span class="function">getUserPreferences</span> = () => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">preferences</span> = localStorage.<span class="function">getItem</span>(<span class="string">'userPreferences'</span>);
+    <span class="keyword">return</span> preferences ? JSON.<span class="function">parse</span>(preferences) : {
+      theme: <span class="string">'light'</span>,
+      language: <span class="string">'en'</span>,
+      autoSave: <span class="keyword">true</span>,
+      notifications: <span class="keyword">true</span>
+    };
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Error reading preferences:'</span>, error);
+    <span class="keyword">return</span> {};
+  }
+};
+
+<span class="comment">// API request interceptor with token</span>
+api.interceptors.request.<span class="function">use</span>((config) => {
+  <span class="keyword">const</span> <span class="variable">token</span> = <span class="function">getAuthToken</span>();
+  <span class="keyword">if</span> (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  <span class="keyword">return</span> config;
+});
+            </div>
+
+            <div class="features-list">
+                <h4>Local Storage Features Implemented:</h4>
+                <ul>
+                    <li>JWT token storage and validation</li>
+                    <li>User authentication persistence</li>
+                    <li>User preferences and settings</li>
+                    <li>Theme and language preferences</li>
+                    <li>Last login timestamp tracking</li>
+                    <li>Automatic token expiration handling</li>
+                    <li>Error handling and fallbacks</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Background Tasks API Implementation -->
+        <div class="api-section" id="background-tasks-api">
+            <h2><span class="icon">⏰</span> Background Tasks API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/utils/backgroundTasks.js</div>
+
+            <div class="code-block">
+<span class="comment">// Background Task Manager using requestIdleCallback</span>
+<span class="keyword">class</span> <span class="function">BackgroundTaskManager</span> {
+  <span class="function">constructor</span>() {
+    <span class="keyword">this</span>.tasks = [];
+    <span class="keyword">this</span>.isRunning = <span class="keyword">false</span>;
+    <span class="keyword">this</span>.idleCallback = <span class="keyword">null</span>;
+  }
+
+  <span class="comment">// Add task to queue with priority</span>
+  <span class="function">addTask</span>(taskFunction, priority = <span class="string">'normal'</span>) {
+    <span class="keyword">const</span> <span class="variable">task</span> = {
+      id: Date.<span class="function">now</span>() + Math.<span class="function">random</span>(),
+      execute: taskFunction,
+      priority: priority, <span class="comment">// 'high', 'normal', 'low'</span>
+      addedAt: Date.<span class="function">now</span>()
+    };
+
+    <span class="comment">// Insert task based on priority</span>
+    <span class="keyword">if</span> (priority === <span class="string">'high'</span>) {
+      <span class="keyword">this</span>.tasks.<span class="function">unshift</span>(task);
+    } <span class="keyword">else</span> {
+      <span class="keyword">this</span>.tasks.<span class="function">push</span>(task);
+    }
+
+    <span class="comment">// Start processing if not already running</span>
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.isRunning) {
+      <span class="keyword">this</span>.<span class="function">scheduleIdleTasks</span>();
+    }
+
+    <span class="keyword">return</span> task.id;
+  }
+
+  <span class="comment">// Schedule tasks during browser idle time</span>
+  <span class="function">scheduleIdleTasks</span>() {
+    <span class="keyword">if</span> (!(<span class="string">'requestIdleCallback'</span> <span class="keyword">in</span> window)) {
+      <span class="comment">// Fallback for browsers without requestIdleCallback</span>
+      <span class="function">setTimeout</span>(() => <span class="keyword">this</span>.<span class="function">processTasks</span>(), 16);
+      <span class="keyword">return</span>;
+    }
+
+    <span class="keyword">this</span>.isRunning = <span class="keyword">true</span>;
+    <span class="keyword">this</span>.idleCallback = <span class="function">requestIdleCallback</span>((deadline) => {
+      <span class="keyword">this</span>.<span class="function">processTasks</span>(deadline);
+    });
+  }
+
+  <span class="comment">// Process tasks within available time</span>
+  <span class="function">processTasks</span>(deadline = <span class="keyword">null</span>) {
+    <span class="keyword">const</span> <span class="function">hasTimeRemaining</span> = () => {
+      <span class="keyword">return</span> deadline ? deadline.<span class="function">timeRemaining</span>() > 0 : <span class="keyword">true</span>;
+    };
+
+    <span class="keyword">while</span> (<span class="function">hasTimeRemaining</span>() && <span class="keyword">this</span>.tasks.length > 0) {
+      <span class="keyword">const</span> <span class="variable">task</span> = <span class="keyword">this</span>.tasks.<span class="function">shift</span>();
+
+      <span class="keyword">try</span> {
+        task.<span class="function">execute</span>();
+      } <span class="keyword">catch</span> (error) {
+        console.<span class="function">error</span>(<span class="string">'Background task failed:'</span>, error);
+      }
+    }
+
+    <span class="comment">// Schedule more tasks if queue is not empty</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>.tasks.length > 0) {
+      <span class="keyword">this</span>.<span class="function">scheduleIdleTasks</span>();
+    } <span class="keyword">else</span> {
+      <span class="keyword">this</span>.isRunning = <span class="keyword">false</span>;
+    }
+  }
+
+  <span class="comment">// Pause tasks when page is hidden</span>
+  <span class="function">pauseTasks</span>() {
+    <span class="keyword">this</span>.isRunning = <span class="keyword">false</span>;
+    <span class="keyword">if</span> (<span class="keyword">this</span>.idleCallback) {
+      <span class="function">cancelIdleCallback</span>(<span class="keyword">this</span>.idleCallback);
+      <span class="keyword">this</span>.idleCallback = <span class="keyword">null</span>;
+    }
+  }
+
+  <span class="comment">// Resume tasks when page becomes visible</span>
+  <span class="function">resumeTasks</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.isRunning && <span class="keyword">this</span>.tasks.length > 0) {
+      <span class="keyword">this</span>.<span class="function">scheduleIdleTasks</span>();
+    }
+  }
+}
+
+<span class="comment">// Global task manager instance</span>
+<span class="keyword">const</span> <span class="variable">backgroundTaskManager</span> = <span class="keyword">new</span> <span class="function">BackgroundTaskManager</span>();
+
+<span class="comment">// Smart preloading functions</span>
+<span class="keyword">export</span> <span class="keyword">const</span> <span class="variable">smartPreload</span> = {
+  <span class="function">preloadNextLesson</span>: (currentLessonId, courseId) => {
+    backgroundTaskManager.<span class="function">addTask</span>(<span class="keyword">async</span> () => {
+      <span class="keyword">try</span> {
+        <span class="keyword">const</span> <span class="variable">nextLesson</span> = <span class="keyword">await</span> api.<span class="function">get</span>(`/lessons/${currentLessonId}/next`);
+        <span class="keyword">if</span> (nextLesson.data) {
+          <span class="keyword">await</span> <span class="function">cacheInIndexedDB</span>(<span class="string">'lessons'</span>, nextLesson.data);
+        }
+      } <span class="keyword">catch</span> (error) {
+        console.<span class="function">log</span>(<span class="string">'Failed to preload next lesson:'</span>, error);
+      }
+    }, <span class="string">'normal'</span>);
+  },
+
+  <span class="function">preloadPopularCourses</span>: () => {
+    backgroundTaskManager.<span class="function">addTask</span>(<span class="keyword">async</span> () => {
+      <span class="keyword">try</span> {
+        <span class="keyword">const</span> <span class="variable">courses</span> = <span class="keyword">await</span> api.<span class="function">get</span>(<span class="string">'/courses/popular'</span>);
+        <span class="keyword">await</span> <span class="function">cacheInIndexedDB</span>(<span class="string">'courses'</span>, courses.data);
+      } <span class="keyword">catch</span> (error) {
+        console.<span class="function">log</span>(<span class="string">'Failed to preload popular courses:'</span>, error);
+      }
+    }, <span class="string">'low'</span>);
+  }
+};
+
+<span class="comment">// Page Visibility API integration</span>
+document.<span class="function">addEventListener</span>(<span class="string">'visibilitychange'</span>, () => {
+  <span class="keyword">if</span> (document.hidden) {
+    backgroundTaskManager.<span class="function">pauseTasks</span>();
+  } <span class="keyword">else</span> {
+    backgroundTaskManager.<span class="function">resumeTasks</span>();
+  }
+});
+            </div>
+
+            <div class="features-list">
+                <h4>Background Tasks Features Implemented:</h4>
+                <ul>
+                    <li>Idle-time task scheduling with requestIdleCallback</li>
+                    <li>Priority-based task queue management</li>
+                    <li>Smart content preloading during idle time</li>
+                    <li>Page visibility integration for performance</li>
+                    <li>Fallback for browsers without idle callback</li>
+                    <li>Error handling and task recovery</li>
+                    <li>Automatic pause/resume based on page state</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Fetch API Implementation -->
+        <div class="api-section" id="fetch-api">
+            <h2><span class="icon">🌐</span> Fetch API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/utils/api.js</div>
+
+            <div class="code-block">
+<span class="comment">// Offline-aware API wrapper using Fetch API</span>
+<span class="keyword">export</span> <span class="keyword">const</span> <span class="variable">offlineAPI</span> = {
+  <span class="keyword">async</span> <span class="function">request</span>(apiCall, fallbackData = <span class="keyword">null</span>, cacheKey = <span class="keyword">null</span>) {
+    <span class="keyword">try</span> {
+      <span class="comment">// Try online request first</span>
+      <span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">apiCall</span>();
+
+      <span class="comment">// Cache successful response if cacheKey provided</span>
+      <span class="keyword">if</span> (cacheKey && <span class="string">'caches'</span> <span class="keyword">in</span> window) {
+        <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(<span class="string">'api-cache'</span>);
+        cache.<span class="function">put</span>(cacheKey, <span class="keyword">new</span> <span class="function">Response</span>(JSON.<span class="function">stringify</span>(response.data)));
+      }
+
+      <span class="keyword">return</span> response;
+    } <span class="keyword">catch</span> (error) {
+      <span class="comment">// Fallback to cached data when offline</span>
+      <span class="keyword">if</span> (cacheKey && <span class="string">'caches'</span> <span class="keyword">in</span> window) {
+        <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(<span class="string">'api-cache'</span>);
+        <span class="keyword">const</span> <span class="variable">cachedResponse</span> = <span class="keyword">await</span> cache.<span class="function">match</span>(cacheKey);
+
+        <span class="keyword">if</span> (cachedResponse) {
+          <span class="keyword">const</span> <span class="variable">data</span> = <span class="keyword">await</span> cachedResponse.<span class="function">json</span>();
+          <span class="keyword">return</span> { data, fromCache: <span class="keyword">true</span> };
+        }
+      }
+
+      <span class="comment">// Return fallback data or throw error</span>
+      <span class="keyword">if</span> (fallbackData) {
+        <span class="keyword">return</span> { data: fallbackData, fromFallback: <span class="keyword">true</span> };
+      }
+
+      <span class="keyword">throw</span> error;
+    }
+  }
+};
+
+<span class="comment">// Enhanced fetch with retry logic</span>
+<span class="keyword">const</span> <span class="function">fetchWithRetry</span> = <span class="keyword">async</span> (url, options = {}, retries = 3) => {
+  <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; i <= retries; i++) {
+    <span class="keyword">try</span> {
+      <span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(url, {
+        ...options,
+        signal: <span class="function">AbortSignal</span>.<span class="function">timeout</span>(10000), <span class="comment">// 10 second timeout</span>
+      });
+
+      <span class="keyword">if</span> (!response.ok) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      <span class="keyword">return</span> response;
+    } <span class="keyword">catch</span> (error) {
+      <span class="keyword">if</span> (i === retries) {
+        <span class="keyword">throw</span> error;
+      }
+
+      <span class="comment">// Exponential backoff</span>
+      <span class="keyword">const</span> <span class="variable">delay</span> = Math.<span class="function">pow</span>(2, i) * 1000;
+      <span class="keyword">await</span> <span class="keyword">new</span> <span class="function">Promise</span>(resolve => <span class="function">setTimeout</span>(resolve, delay));
+    }
+  }
+};
+
+<span class="comment">// File upload with progress tracking</span>
+<span class="keyword">const</span> <span class="function">uploadFile</span> = <span class="keyword">async</span> (file, onProgress = <span class="keyword">null</span>) => {
+  <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">Promise</span>((resolve, reject) => {
+    <span class="keyword">const</span> <span class="variable">xhr</span> = <span class="keyword">new</span> <span class="function">XMLHttpRequest</span>();
+    <span class="keyword">const</span> <span class="variable">formData</span> = <span class="keyword">new</span> <span class="function">FormData</span>();
+
+    formData.<span class="function">append</span>(<span class="string">'file'</span>, file);
+
+    <span class="comment">// Progress tracking</span>
+    <span class="keyword">if</span> (onProgress) {
+      xhr.upload.<span class="function">addEventListener</span>(<span class="string">'progress'</span>, (event) => {
+        <span class="keyword">if</span> (event.lengthComputable) {
+          <span class="keyword">const</span> <span class="variable">percentComplete</span> = (event.loaded / event.total) * 100;
+          <span class="function">onProgress</span>(percentComplete);
+        }
+      });
+    }
+
+    xhr.<span class="function">addEventListener</span>(<span class="string">'load'</span>, () => {
+      <span class="keyword">if</span> (xhr.status === 200) {
+        <span class="function">resolve</span>(JSON.<span class="function">parse</span>(xhr.responseText));
+      } <span class="keyword">else</span> {
+        <span class="function">reject</span>(<span class="keyword">new</span> <span class="function">Error</span>(`Upload failed: ${xhr.status}`));
+      }
+    });
+
+    xhr.<span class="function">addEventListener</span>(<span class="string">'error'</span>, () => {
+      <span class="function">reject</span>(<span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Upload failed'</span>));
+    });
+
+    <span class="comment">// Add auth token</span>
+    <span class="keyword">const</span> <span class="variable">token</span> = <span class="function">getAuthToken</span>();
+    <span class="keyword">if</span> (token) {
+      xhr.<span class="function">setRequestHeader</span>(<span class="string">'Authorization'</span>, `Bearer ${token}`);
+    }
+
+    xhr.<span class="function">open</span>(<span class="string">'POST'</span>, <span class="string">'/api/files/upload'</span>);
+    xhr.<span class="function">send</span>(formData);
+  });
+};
+
+<span class="comment">// Streaming data fetch for large responses</span>
+<span class="keyword">const</span> <span class="function">fetchStream</span> = <span class="keyword">async</span> (url, onChunk) => {
+  <span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(url);
+  <span class="keyword">const</span> <span class="variable">reader</span> = response.body.<span class="function">getReader</span>();
+  <span class="keyword">const</span> <span class="variable">decoder</span> = <span class="keyword">new</span> <span class="function">TextDecoder</span>();
+
+  <span class="keyword">while</span> (<span class="keyword">true</span>) {
+    <span class="keyword">const</span> { done, value } = <span class="keyword">await</span> reader.<span class="function">read</span>();
+
+    <span class="keyword">if</span> (done) <span class="keyword">break</span>;
+
+    <span class="keyword">const</span> <span class="variable">chunk</span> = decoder.<span class="function">decode</span>(value, { stream: <span class="keyword">true</span> });
+    <span class="function">onChunk</span>(chunk);
+  }
+};
+            </div>
+
+            <div class="features-list">
+                <h4>Fetch API Features Implemented:</h4>
+                <ul>
+                    <li>Offline-aware request handling</li>
+                    <li>Automatic retry with exponential backoff</li>
+                    <li>Request/response caching strategies</li>
+                    <li>File upload with progress tracking</li>
+                    <li>Streaming data for large responses</li>
+                    <li>Request timeout and abort signals</li>
+                    <li>JWT token integration</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Touch Events API Implementation -->
+        <div class="api-section" id="touch-events-api">
+            <h2><span class="icon">👆</span> Touch Events API Implementation</h2>
+
+            <div class="file-path">📁 frontend/src/components/Canvas/DrawingCanvas.js</div>
+
+            <div class="code-block">
+<span class="comment">// Touch event handlers for mobile drawing</span>
+<span class="keyword">const</span> <span class="function">handleTouchStart</span> = (e) => {
+  e.<span class="function">preventDefault</span>();
+  <span class="keyword">const</span> <span class="variable">touch</span> = e.touches[0];
+  <span class="keyword">const</span> <span class="variable">rect</span> = canvasRef.current.<span class="function">getBoundingClientRect</span>();
+
+  <span class="keyword">const</span> <span class="variable">pos</span> = {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
+
+  <span class="function">startDrawing</span>({ clientX: pos.x, clientY: pos.y });
+};
+
+<span class="keyword">const</span> <span class="function">handleTouchMove</span> = (e) => {
+  e.<span class="function">preventDefault</span>();
+  <span class="keyword">if</span> (!isDrawing) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> <span class="variable">touch</span> = e.touches[0];
+  <span class="keyword">const</span> <span class="variable">rect</span> = canvasRef.current.<span class="function">getBoundingClientRect</span>();
+
+  <span class="keyword">const</span> <span class="variable">pos</span> = {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
+
+  <span class="function">draw</span>({ clientX: pos.x, clientY: pos.y });
+};
+
+<span class="keyword">const</span> <span class="function">handleTouchEnd</span> = (e) => {
+  e.<span class="function">preventDefault</span>();
+  <span class="function">stopDrawing</span>(e);
+};
+
+<span class="comment">// Multi-touch gesture handling</span>
+<span class="keyword">const</span> <span class="function">handleMultiTouch</span> = (e) => {
+  <span class="keyword">if</span> (e.touches.length === 2) {
+    <span class="comment">// Two-finger pinch for zoom</span>
+    <span class="keyword">const</span> <span class="variable">touch1</span> = e.touches[0];
+    <span class="keyword">const</span> <span class="variable">touch2</span> = e.touches[1];
+
+    <span class="keyword">const</span> <span class="variable">distance</span> = Math.<span class="function">sqrt</span>(
+      Math.<span class="function">pow</span>(touch2.clientX - touch1.clientX, 2) +
+      Math.<span class="function">pow</span>(touch2.clientY - touch1.clientY, 2)
+    );
+
+    <span class="keyword">if</span> (lastPinchDistance) {
+      <span class="keyword">const</span> <span class="variable">scale</span> = distance / lastPinchDistance;
+      <span class="function">handleZoom</span>(scale);
+    }
+
+    <span class="function">setLastPinchDistance</span>(distance);
+  }
+};
+
+<span class="comment">// Touch pressure sensitivity (if supported)</span>
+<span class="keyword">const</span> <span class="function">getTouchPressure</span> = (touch) => {
+  <span class="keyword">if</span> (<span class="string">'force'</span> <span class="keyword">in</span> touch) {
+    <span class="keyword">return</span> touch.force; <span class="comment">// 0.0 to 1.0</span>
+  }
+  <span class="keyword">return</span> 0.5; <span class="comment">// Default pressure</span>
+};
+
+<span class="comment">// Canvas touch configuration</span>
+<span class="function">useEffect</span>(() => {
+  <span class="keyword">const</span> <span class="variable">canvas</span> = canvasRef.current;
+  <span class="keyword">if</span> (!canvas) <span class="keyword">return</span>;
+
+  <span class="comment">// Prevent scrolling while drawing</span>
+  canvas.style.touchAction = <span class="string">'none'</span>;
+
+  <span class="comment">// Add touch event listeners</span>
+  canvas.<span class="function">addEventListener</span>(<span class="string">'touchstart'</span>, handleTouchStart, { passive: <span class="keyword">false</span> });
+  canvas.<span class="function">addEventListener</span>(<span class="string">'touchmove'</span>, handleTouchMove, { passive: <span class="keyword">false</span> });
+  canvas.<span class="function">addEventListener</span>(<span class="string">'touchend'</span>, handleTouchEnd, { passive: <span class="keyword">false</span> });
+
+  <span class="keyword">return</span> () => {
+    canvas.<span class="function">removeEventListener</span>(<span class="string">'touchstart'</span>, handleTouchStart);
+    canvas.<span class="function">removeEventListener</span>(<span class="string">'touchmove'</span>, handleTouchMove);
+    canvas.<span class="function">removeEventListener</span>(<span class="string">'touchend'</span>, handleTouchEnd);
+  };
+}, []);
+            </div>
+
+            <div class="features-list">
+                <h4>Touch Events Features Implemented:</h4>
+                <ul>
+                    <li>Single-touch drawing and interaction</li>
+                    <li>Multi-touch gesture recognition</li>
+                    <li>Touch pressure sensitivity support</li>
+                    <li>Prevent scroll while drawing</li>
+                    <li>Touch coordinate normalization</li>
+                    <li>Passive event listener optimization</li>
+                    <li>Cross-platform touch compatibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Cache API Implementation -->
+        <div class="api-section" id="cache-api">
+            <h2><span class="icon">🗂️</span> Cache API Implementation</h2>
+
+            <div class="file-path">📁 frontend/public/sw.js</div>
+
+            <div class="code-block">
+<span class="comment">// Cache API for strategic content caching</span>
+<span class="keyword">const</span> <span class="variable">CACHE_NAME</span> = <span class="string">'elearning-portal-v1'</span>;
+<span class="keyword">const</span> <span class="variable">API_CACHE_NAME</span> = <span class="string">'elearning-api-v1'</span>;
+
+<span class="comment">// Cache management functions</span>
+<span class="keyword">const</span> <span class="function">cacheResources</span> = <span class="keyword">async</span> (cacheName, resources) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(cacheName);
+    <span class="keyword">await</span> cache.<span class="function">addAll</span>(resources);
+    console.<span class="function">log</span>(`Cached ${resources.length} resources in ${cacheName}`);
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Failed to cache resources:'</span>, error);
+  }
+};
+
+<span class="comment">// Smart cache retrieval with fallback</span>
+<span class="keyword">const</span> <span class="function">getCachedResponse</span> = <span class="keyword">async</span> (request) => {
+  <span class="keyword">try</span> {
+    <span class="comment">// Try all cache stores</span>
+    <span class="keyword">const</span> <span class="variable">cacheNames</span> = [CACHE_NAME, API_CACHE_NAME];
+
+    <span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">cacheName</span> <span class="keyword">of</span> cacheNames) {
+      <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(cacheName);
+      <span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> cache.<span class="function">match</span>(request);
+
+      <span class="keyword">if</span> (response) {
+        <span class="keyword">return</span> response;
+      }
+    }
+
+    <span class="keyword">return</span> <span class="keyword">null</span>;
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Cache retrieval failed:'</span>, error);
+    <span class="keyword">return</span> <span class="keyword">null</span>;
+  }
+};
+
+<span class="comment">// Cache cleanup and management</span>
+<span class="keyword">const</span> <span class="function">cleanupOldCaches</span> = <span class="keyword">async</span> () => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">cacheNames</span> = <span class="keyword">await</span> caches.<span class="function">keys</span>();
+    <span class="keyword">const</span> <span class="variable">currentCaches</span> = [CACHE_NAME, API_CACHE_NAME];
+
+    <span class="keyword">const</span> <span class="variable">oldCaches</span> = cacheNames.<span class="function">filter</span>(name =>
+      !currentCaches.<span class="function">includes</span>(name)
+    );
+
+    <span class="keyword">await</span> <span class="function">Promise.all</span>(
+      oldCaches.<span class="function">map</span>(cacheName => {
+        console.<span class="function">log</span>(`Deleting old cache: ${cacheName}`);
+        <span class="keyword">return</span> caches.<span class="function">delete</span>(cacheName);
+      })
+    );
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Cache cleanup failed:'</span>, error);
+  }
+};
+
+<span class="comment">// Dynamic cache updates</span>
+<span class="keyword">const</span> <span class="function">updateCache</span> = <span class="keyword">async</span> (request, response) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">url</span> = <span class="keyword">new</span> <span class="function">URL</span>(request.url);
+    <span class="keyword">let</span> <span class="variable">cacheName</span>;
+
+    <span class="comment">// Determine appropriate cache</span>
+    <span class="keyword">if</span> (url.pathname.<span class="function">startsWith</span>(<span class="string">'/api/'</span>)) {
+      cacheName = API_CACHE_NAME;
+    } <span class="keyword">else</span> {
+      cacheName = CACHE_NAME;
+    }
+
+    <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(cacheName);
+    <span class="keyword">await</span> cache.<span class="function">put</span>(request, response.<span class="function">clone</span>());
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Cache update failed:'</span>, error);
+  }
+};
+
+<span class="comment">// Cache size management</span>
+<span class="keyword">const</span> <span class="function">limitCacheSize</span> = <span class="keyword">async</span> (cacheName, maxItems) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">cache</span> = <span class="keyword">await</span> caches.<span class="function">open</span>(cacheName);
+    <span class="keyword">const</span> <span class="variable">keys</span> = <span class="keyword">await</span> cache.<span class="function">keys</span>();
+
+    <span class="keyword">if</span> (keys.length > maxItems) {
+      <span class="comment">// Remove oldest entries</span>
+      <span class="keyword">const</span> <span class="variable">keysToDelete</span> = keys.<span class="function">slice</span>(0, keys.length - maxItems);
+      <span class="keyword">await</span> <span class="function">Promise.all</span>(
+        keysToDelete.<span class="function">map</span>(key => cache.<span class="function">delete</span>(key))
+      );
+    }
+  } <span class="keyword">catch</span> (error) {
+    console.<span class="function">error</span>(<span class="string">'Cache size limit failed:'</span>, error);
+  }
+};
+
+<span class="comment">// Activate event - cleanup old caches</span>
+self.<span class="function">addEventListener</span>(<span class="string">'activate'</span>, (event) => {
+  event.<span class="function">waitUntil</span>(<span class="function">cleanupOldCaches</span>());
+});
+            </div>
+
+            <div class="features-list">
+                <h4>Cache API Features Implemented:</h4>
+                <ul>
+                    <li>Strategic cache management for different content types</li>
+                    <li>Automatic cache cleanup and versioning</li>
+                    <li>Dynamic cache updates based on content</li>
+                    <li>Cache size limits and LRU eviction</li>
+                    <li>Multi-cache fallback strategies</li>
+                    <li>Error handling and recovery</li>
+                    <li>Performance optimization</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-top: 40px; text-align: center;">
+            <h2 style="margin-bottom: 20px;">🎯 Implementation Summary</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">
+                This comprehensive implementation showcases <strong>10+ Web APIs</strong> working together to create a
+                robust, offline-first e-learning platform with modern web capabilities.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>🎨 Canvas API</h4>
+                    <p>Interactive drawing & visual learning</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>💾 IndexedDB</h4>
+                    <p>Offline data storage & sync</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>⚙️ Service Worker</h4>
+                    <p>Background processing & caching</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>👁️ Intersection Observer</h4>
+                    <p>Scroll animations & lazy loading</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>📡 Network Information</h4>
+                    <p>Adaptive content delivery</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <h4>🗄️ Local Storage</h4>
+                    <p>User preferences & auth</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 1rem; opacity: 0.9;">
+                <strong>Ready for Production</strong> • Modern Web Standards • Offline-First Architecture
+            </p>
+        </div>
+    </div>
+</body>
+</html>
